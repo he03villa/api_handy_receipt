@@ -8,7 +8,7 @@ class DetallleOrden extends Model
 {
     //
 
-    protected $fillable = ['orden_id', 'producto_id', 'cantidad', 'costo', 'total'];
+    protected $fillable = ['orden_id', 'producto_id', 'cantidad', 'precio', 'observaciones'];
 
     public function orden()
     {
