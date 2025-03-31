@@ -1,0 +1,9 @@
+services:
+  api-handy:
+    build: .
+    container_name: api-handy
+    restart: always
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"

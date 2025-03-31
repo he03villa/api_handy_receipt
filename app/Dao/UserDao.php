@@ -2,6 +2,7 @@
 
 namespace App\Dao;
 
+use App\Models\Empresa;
 use App\Models\User;
 
 class UserDao
@@ -69,5 +70,12 @@ class UserDao
             'token_type' => 'bearer',
             'expires_in' => config('jwt.ttl') * 60
         ]);
+    }
+
+    public function registerempresa(array $data) {
+        $user = User::create($data);
+        $empresa = new Empresa($data['empresa']);
+        $user->empresa()->save($empresa);
+        return $user;
     }
 }

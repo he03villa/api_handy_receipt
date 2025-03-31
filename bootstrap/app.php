@@ -15,6 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
+        $middleware->alias([
+            'validarCrearEmpresa' => App\Http\Middleware\validarCrearEmpresa::class,
+            'validarCrearCategoria' => App\Http\Middleware\validarCrearCategoriaMiddleware::class,
+            'validarCrarProducto' => App\Http\Middleware\validarCrarProductoMiddleware::class
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (AuthenticationException $e, Request $request) {

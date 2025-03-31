@@ -13,6 +13,10 @@ class Categoria extends Model
         'empresa_id',
     ];
 
+    protected $hidden = ['created_at', 'updated_at'];
+
+    protected $appends = ['numero_productos'];
+
     public function empresa()
     {
         return $this->belongsTo(Empresa::class);
@@ -21,5 +25,10 @@ class Categoria extends Model
     public function productos()
     {
         return $this->hasMany(Producto::class);
+    }
+
+    public function getNumeroProductosAttribute()
+    {
+        return $this->productos()->count();
     }
 }

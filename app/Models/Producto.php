@@ -14,7 +14,10 @@ class Producto extends Model
         'descripcion',
         'imagen',
         'precio',
+        'status',
     ];
+
+    /* protected $appends = ['status']; */
 
     public function empresa()
     {
@@ -30,4 +33,9 @@ class Producto extends Model
     {
         return $this->hasMany(DetallleOrden::class);
     }
+
+    /* public function getStatusAttribute()
+    {
+        return $this->attributes['status'] == 1;
+    } */
 }

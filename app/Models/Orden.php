@@ -12,6 +12,13 @@ class Orden extends Model
         'vendedor_id',
         'cliente_id',
         'status',
+        'tipo_ordens_id',
+        'total',
+        'numero_factura',
+    ];
+
+    protected $appends = [
+        'numero_detalle',
     ];
 
     public function empresa()
@@ -37,5 +44,15 @@ class Orden extends Model
     public function tipo_orden()
     {
         return $this->belongsTo(TipoOrden::class);
+    }
+
+    public function getNumeroDetalleAttribute()
+    {
+        return $this->detalles()->count();
+    }
+
+    public function productos()
+    {
+        return $this->belongsToMany(Producto::class, 'detallle_ordens', 'orden_id', 'producto_id')->withPivot('cantidad', 'precio', 'observaciones');
     }
 }
