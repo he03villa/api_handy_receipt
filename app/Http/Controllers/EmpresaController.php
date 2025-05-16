@@ -49,4 +49,28 @@ class EmpresaController extends Controller
         }
         return response()->json($empresa, 201);
     }
+
+    public function update(Request $request, $id) {
+        $res = $request->all();
+        if ($request->logo != null) {
+            $imag1Base64 = $res['logo']['base64'];
+
+            $pos = strpos($imag1Base64, 'base64');
+            if ($pos !== false) {
+                $folderPath = public_path("storage/images/empresa/".$id);
+                if (!file_exists($folderPath)) {
+                    mkdir($folderPath, 0755, true); // Crear la carpeta si no existe
+                }
+                $imag1Base64 = explode(',', $imag1Base64)[1];
+                $image = base64_decode($imag1Base64);
+                $imageName = $res['logo']['name'];
+                $imagePath = $folderPath . '/' . $imageName;
+                file_put_contents($imagePath, $image);
+                $imageUrl1 = "/{$id}/" . $imageName;
+                $res['logo'] = $imageUrl1;
+            }
+        }
+        $empresa = $this->_empresaDao->update($id, $res);
+        return response()->json($empresa, 200);
+    }
 }

@@ -24,7 +24,9 @@ class UserController extends Controller
     }
 
     public function getUserLogin() {
-        return $this->_userDao->getUserLogin();
+        $user = $this->_userDao->getUserLogin();
+        $user['empresa'] = $user->empresa;
+        return $user;
     }
 
     public function saveUser(Request $request) {

@@ -14,10 +14,11 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'saveUser']);
-Route::get('/me', [UserController::class, 'getUserLogin'])->middleware('auth:api');
+Route::get('/show', [UserController::class, 'getUserLogin'])->middleware('auth:api');
 
 Route::group(['prefix' => 'empresa'], function () {
    Route::post('/register', [EmpresaController::class, 'registerempresa'])->middleware('validarCrearEmpresa');
+   Route::put('/{id}', [EmpresaController::class, 'update'])->middleware('validarUpdateEmpresa');
 });
 
 Route::group(['prefix' => 'categoria', 'middleware' => 'auth:api'], function () {

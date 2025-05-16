@@ -14,6 +14,10 @@ class Empresa extends Model
         'description',
     ];
 
+    protected $appends = [
+        'logo_label',
+    ];
+
     public function ordens()
     {
         return $this->hasMany(Orden::class);
@@ -35,6 +39,10 @@ class Empresa extends Model
 
     public function categorias(){
         return $this->hasMany(Categoria::class);
+    }
+
+    public function getLogoLabelAttribute(){
+        return asset("storage/images/empresa{$this->logo}");
     }
 
 }

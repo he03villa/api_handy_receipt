@@ -2,6 +2,7 @@
 
 namespace App\Dao;
 
+use App\Events\MessageSent;
 use App\Models\Orden;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,12 @@ class OrdenDao
         if ($data['detalles']) {
             $orden->productos()->sync($data['detalles']);
         }
+        $message = [
+            'user' => auth()->user()->name,
+            'content' => request('message', 'Mensaje de prueba por defecto'),
+            'time' => now()->format('H:i')
+        ];
+        event(new MessageSent($message));
         return $orden;
     }
 
@@ -25,6 +32,12 @@ class OrdenDao
             $orden->productos()->sync($data['detalles']);
         }
         $orden->update($data);
+        $message = [
+            'user' => auth()->user()->name,
+            'content' => request('message', 'Mensaje de prueba por defecto'),
+            'time' => now()->format('H:i')
+        ];
+        event(new MessageSent($message));
         return $orden;
     }
 
