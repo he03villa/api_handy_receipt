@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Dao\UserDao;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -16,7 +17,9 @@ class UserController extends Controller
     }
 
     public function login(Request $request) {
-        return $this->_userDao->login($request->all());
+        $user = $this->_userDao->login($request->all());
+        Log::info($user);
+        return $user;
     }
 
     public function logout() {

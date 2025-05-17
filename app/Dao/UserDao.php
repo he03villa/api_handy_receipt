@@ -4,6 +4,7 @@ namespace App\Dao;
 
 use App\Models\Empresa;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class UserDao
 {
@@ -56,6 +57,7 @@ class UserDao
     }
 
     public function login(array $data) {
+        Log::info($data);
         if (! $token = auth('api')->attempt($data)) {
             return response()->json(['error' => 'Unauthorized'], 400);
         }

@@ -68,6 +68,8 @@ class EmpresaController extends Controller
                 file_put_contents($imagePath, $image);
                 $imageUrl1 = "/{$id}/" . $imageName;
                 $res['logo'] = $imageUrl1;
+            } else {
+                unset($res['logo']);
             }
         }
         $empresa = $this->_empresaDao->update($id, $res);
