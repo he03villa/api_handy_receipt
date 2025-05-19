@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        //$middleware->prepend(\App\Http\Middleware\XAuthorizationHeader::class);
         $middleware->alias([
             'validarCrearEmpresa' => App\Http\Middleware\validarCrearEmpresa::class,
             'validarCrearCategoria' => App\Http\Middleware\validarCrearCategoriaMiddleware::class,

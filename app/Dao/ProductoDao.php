@@ -2,21 +2,39 @@
 
 namespace App\Dao;
 
+use App\Events\MessageSent;
+use App\Events\ProductoEvent;
 use App\Models\Producto;
 
 class ProductoDao
 {
     public function save(array $data) {
-        return Producto::create($data);
+        $producto = Producto::create($data);
+        $dataProductoEvent = [
+            'action' => 'created',
+            'producto' => $producto
+        ];
+        event(new ProductoEvent($dataProductoEvent));
+        return $producto;
     }
 
     public function update($id, array $data) {
         Producto::where('id', $id)->update($data);
         $producto = $this->find($id);
+        $dataProductoEvent = [
+            'action' => 'updated',
+            'producto' => $producto->toArray()
+        ];
+        event(new ProductoEvent($dataProductoEvent));
         return $producto;
     }
 
     public function delete($id) {
+        $dataProductoEvent = [
+            'action' => 'deleted',
+            'producto' => $id
+        ];
+        event(new ProductoEvent($dataProductoEvent));
         return Producto::where('id', $id)->delete();
     }
 
